@@ -1,5 +1,5 @@
-import React from 'react';
-import {Header} from "./components/Header";
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import {App} from "./components/App";
 
-ReactDOM.render(<Header/>, document.querySelector('#app'));
+ReactDOM.render(<App/>, document.querySelector('#app'));
