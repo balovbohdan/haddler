@@ -6,7 +6,7 @@ export default {
     devtool: 'source-map',
     entry: './src/index.tsx',
     resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.json']
+        extensions: ['.ts', '.tsx', '.js', '.json', '.css']
     },
     output: {
         filename: 'main.js',
@@ -25,7 +25,7 @@ export default {
 
             {
                 test: /\.css$/,
-                include: path.join(__dirname, 'src/css'),
+                include: path.join(__dirname, 'src/css/'),
                 use: [
                     { loader: 'style-loader' },
                     {

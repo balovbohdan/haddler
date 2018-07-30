@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Kaushan+Script|Caveat');
-
 html, body, main, div, span,
 object, iframe, h1, h2, h3, h4, h5, h6,
 p, blockquote, pre, a, abbr, acronym,
@@ -20,7 +18,7 @@ mark, audio, video, input, textarea {
     box-sizing: border-box;
 
     font-size:  100%;
-    font-family: 'Comfortaa', sans-serif;
+    font-family: Comfortaa, sans-serif;
 }
 
 html {
@@ -88,15 +86,6 @@ h5, h6 { font-size: 20px; }
     h3 { font-size: 25px; }
     h4 { font-size: 20px; }
     h5, h6 { font-size: 15px; }
-}
-
-/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
-
-/* Default application styles. */
-
-.App {
-    width: 100vw;
-    min-height: 100vh;
 }
 
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */

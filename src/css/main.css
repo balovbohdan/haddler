@@ -1,0 +1,7 @@
+@import url(reset.css);
+@import url(fonts.css);
+
+.App {
+    width: 100vw;
+    min-height: 100vh;
+}

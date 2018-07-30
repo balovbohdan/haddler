@@ -1,14 +1,51 @@
 .main {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 
     width: 100%;
     height: 80px;
+    padding: 10px;
 }
 
-.title {
-    font-family: 'Caveat', cursive;
+.part {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+/* Left part. */
+
+.part.left {
+    justify-content: flex-start;
+}
+
+/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+/* Center part. */
+
+.part.center {
+
+}
+
+.part.center .title {
+    justify-self: flex-start;
+
+    font-family: var(--font-family-title);
     letter-spacing: .02em;
     text-align: center;
 }
+
+/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+/* Right part. */
+
+.part.right {
+    justify-content: flex-end;
+}
+
+.part.right .start-btn {}
+
+/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
