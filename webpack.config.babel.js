@@ -16,7 +16,6 @@ export default {
         rules: [
             { test: /\.js$/, loader: 'babel-loader' },
 
-
             // React & TypeScript.
             // https://www.typescriptlang.org/docs/handbook/react-&-webpack.html
             // https://stackoverflow.com/questions/40899868/typescript-cannot-find-module-react
@@ -25,7 +24,7 @@ export default {
 
             {
                 test: /\.css$/,
-                include: path.join(__dirname, 'src/css/'),
+                include: path.join(__dirname, 'src/css'),
                 use: [
                     { loader: 'style-loader' },
                     {
@@ -33,10 +32,23 @@ export default {
                         options: { modules: true }
                     }
                 ]
+            },
+            {
+                test: /\.(svg|png)$/,
+                loader: 'file-loader',
+                options: {
+                    name: '[path][name]-[hash:8].[ext]',
+                    include: 'src/assets'
+                }
             }
         ]
     },
-    plugins: [ new CopyWebpackPlugin([{ from: 'src/index.html' }]) ],
+    plugins: [
+        new CopyWebpackPlugin([
+            { from: 'src/index.html' },
+            // { from: 'src/assets/icons/*.svg', to: 'assets/icons', flatten: true }
+        ])
+    ],
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
         compress: true,
