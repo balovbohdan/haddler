@@ -3,6 +3,7 @@ import * as css from '../css/components/Header.css';
 import {Btn} from "./Btn";
 import classnames from 'classnames';
 import * as img from '../assets/icons/search-1.svg';
+import {Dispatcher} from "../stores/App";
 
 export interface PropsInterface {}
 export interface StateInterface {}
@@ -67,6 +68,17 @@ class SignInBtn extends React.Component {
  */
 class SearchBtn extends React.Component {
     render() {
-        return <Btn img={img} style={{border: 'none'}}/>;
+        return (
+            <Btn
+                img={img}
+                style={{border: 'none'}}
+                onClick={SearchBtn.toggleSearchWindow.bind(SearchBtn)}/>
+        );
+    }
+
+    static toggleSearchWindow() {
+        Dispatcher.get().dispatch({
+            type: 'test'
+        });
     }
 }

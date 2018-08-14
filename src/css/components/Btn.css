@@ -1,13 +1,13 @@
 .main {
     background: white;
-    border: 1px solid #32DE8A;
+    border: 1px solid var(--main-green);
     border-radius: 3px;
     padding: 8px;
     cursor: pointer;
 
     font-size: 15px;
     font-family: Comfortaa, cursive;
-    color: #32DE8A;
+    color: var(--main-green);
 }
 
 .main > img { height: 20px; }

@@ -1,0 +1,11 @@
+.main {
+    border: none;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: .1s color ease;
+
+    font-size: 30px;
+    color: var(--main-gray);
+}
+
+.main:hover { color: var(--main-dark-gray); }

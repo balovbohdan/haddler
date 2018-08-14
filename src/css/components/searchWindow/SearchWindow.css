@@ -1,0 +1,16 @@
+.main {
+    position: fixed;
+    width: 100vw;
+    height: calc(100vh - var(--header-height));
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white;
+}
+
+.main > header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
