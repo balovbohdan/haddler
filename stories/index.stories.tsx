@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 // import { action } from '@storybook/addon-actions';
 // import { linkTo } from '@storybook/addon-links';
 // import { Button, Welcome } from '@storybook/react/demo';
-import {Header} from "../src/components/Header";
+import {Header} from "../src/components/header/Header";
 
 storiesOf('Header', module)
     .add('Main page', () => <Header/>);

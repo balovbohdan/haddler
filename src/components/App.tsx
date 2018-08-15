@@ -1,22 +1,21 @@
 import * as React from 'react';
-import {Header} from "./Header";
+import {Header} from "./header/Header";
 import * as css from '../css/main.css';
 import {SearchWindow} from './searchWindow/SearchWindow';
+import {Store} from "../stores/App";
 
-export interface PropsInterface {}
-
-export interface StateInterface {
-    searchWindow:boolean;
-}
+export interface IProps {}
+export interface IState { searchWindow:boolean; }
 
 /**
  * @author Balov Bohdan <balovbohdan@gmail.com>
  * @version 1.0.0
  */
-export class App extends React.Component<PropsInterface, StateInterface> {
-    constructor(props:PropsInterface) {
+export class App extends React.Component<IProps, IState> {
+    constructor(props:IProps) {
         super(props);
         this.state = App.getDefState();
+        this.handleStoreListeners();
     }
 
     render() {
@@ -29,10 +28,9 @@ export class App extends React.Component<PropsInterface, StateInterface> {
     }
 
     renderSearchWindow() { return this.state.searchWindow ? <SearchWindow/> : null; }
+    static getDefState():IState { return Store.get().getInitialState(); }
 
-    static getDefState():StateInterface {
-        return {
-            searchWindow: true
-        };
+    private handleStoreListeners() {
+        Store.get().addListener(() => this.setState(Store.get().getState()));
     }
 }

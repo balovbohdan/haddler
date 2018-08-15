@@ -1,17 +1,34 @@
 import {ReduceStore} from 'flux/utils';
 import {Dispatcher as DispatcherBase} from 'flux';
+import {ObjectUtils} from "../lib/ObjectUtils";
+import {EventEmitter} from "fbemitter";
 
 type TStore = { searchWindow:boolean; };
 type TPayload = { type:string; };
-
 type TResolver = (state:TStore, payload?:TPayload) => TStore;
 
 /**
  * @author Balov Bohdan <balovbohdan@gmail.com>
  * @version 1.0.0
  */
+export class Dispatcher {
+    static readonly TOGGLE_SEARCH_WINDOW:string = 'toggleSearchWindow';
+
+    static get():DispatcherBase<TPayload> {
+        return this.instance
+            ? this.instance :
+            (this.instance = new DispatcherBase<TPayload>());
+    }
+
+    private static instance:DispatcherBase<TPayload>|null = null;
+}
+
+/**
+ * @author Balov Bohdan <balovbohdan@gmail.com>
+ * @version 1.0.0
+ */
 export class Store extends ReduceStore<TStore, TPayload> {
-    static readonly TOGGLE_SEARCH_WINDOW = 'toggleSearchWindow';
+    static get():Store { return this.instance ? this.instance : new Store(); }
 
     getInitialState():TStore {
         return {
@@ -19,25 +36,33 @@ export class Store extends ReduceStore<TStore, TPayload> {
         };
     }
 
+    doReduce(payload:TPayload):TStore { return this.reduce(this.getState(), payload); }
+    getState():TStore { return ObjectUtils.getClone<TStore>(super.getState()); }
+    getEmitter():EventEmitter { return this.__emitter; }
+
     reduce(state:TStore, payload:TPayload):TStore {
+        state = ObjectUtils.getClone<TStore>(state);
+
         try {
-            const resolver:TResolver = Resolvers[payload.type] || null;
-            if (typeof resolver === 'function') return resolver.apply(Store, arguments);
-            return state;
+            const eventType: string = payload.type;
+            const resolver: TResolver = Resolvers[eventType] || null;
+            if (typeof resolver !== 'function') return state;
+            const reducedState: TStore = resolver(state, payload);
+            this.getEmitter().emit(eventType);
+            return reducedState;
         } catch (e) {
             return state;
         }
     }
-}
 
-/**
- * @author Balov Bohdan <balovbohdan@gmail.com>
- * @version 1.0.0
- */
-export class Dispatcher extends DispatcherBase<TPayload> {
-    static get():Dispatcher { return this.instance ? this.instance : (this.instance = new Dispatcher()); }
-    private constructor() { super(); }
-    private static instance:Dispatcher|null = null;
+
+    private constructor() {
+        if (Store.instance) return Store.instance;
+        super(Dispatcher.get());
+        Store.instance = this;
+    }
+
+    private static instance:Store|null = null;
 }
 
 /**
@@ -45,13 +70,18 @@ export class Dispatcher extends DispatcherBase<TPayload> {
  * @version 1.0.0
  */
 class Resolvers {
-    static toggleSearchWindow(state: TStore):TStore {
+    static toggleSearchWindow(state:TStore):TStore {
+        state = ObjectUtils.getClone<TStore>(state);
         state.searchWindow = !state.searchWindow;
         return state;
     }
 }
 
-Dispatcher.get().register(payload => {
-    console.log('payload type', payload.type);
-    return true;
+Dispatcher.get().register((payload:TPayload) => {
+    try {
+        Store.get().doReduce(payload);
+        return true;
+    } catch (e) {
+        return false;
+    }
 });
