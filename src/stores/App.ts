@@ -1,7 +1,7 @@
 import {ReduceStore} from 'flux/utils';
 import {Dispatcher as DispatcherBase} from 'flux';
-import {ObjectUtils} from "../lib/ObjectUtils";
 import {EventEmitter} from "fbemitter";
+import Immutable from 'immutable';
 
 type TStore = { searchWindow:boolean; };
 type TPayload = { type:string; };
@@ -37,11 +37,11 @@ export class Store extends ReduceStore<TStore, TPayload> {
     }
 
     doReduce(payload:TPayload):TStore { return this.reduce(this.getState(), payload); }
-    getState():TStore { return ObjectUtils.getClone<TStore>(super.getState()); }
+    getState():TStore { return Immutable.fromJS(super.getState()); }
     getEmitter():EventEmitter { return this.__emitter; }
 
     reduce(state:TStore, payload:TPayload):TStore {
-        state = ObjectUtils.getClone<TStore>(state);
+        state = Immutable.fromJS(state);
 
         try {
             const eventType: string = payload.type;
@@ -71,7 +71,7 @@ export class Store extends ReduceStore<TStore, TPayload> {
  */
 class Resolvers {
     static toggleSearchWindow(state:TStore):TStore {
-        state = ObjectUtils.getClone<TStore>(state);
+        state = Immutable.fromJS(state);
         state.searchWindow = !state.searchWindow;
         return state;
     }
